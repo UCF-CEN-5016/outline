@@ -8,16 +8,23 @@ const shared = {
   database: process.env.DATABASE_NAME,
 };
 
+// The runtime honours PGSSLMODE=disable (see server/storage/database.ts), so the
+// CLI should too — otherwise `yarn db:migrate` forces SSL against a local
+// Postgres and fails with "The server does not support SSL connections".
+const sslDisabled = process.env.PGSSLMODE === "disable";
+
 module.exports = {
   development: shared,
   test: shared,
   "production-ssl-disabled": shared,
-  production: {
-    ...shared,
-    dialectOptions: {
-      ssl: {
-        rejectUnauthorized: false,
+  production: sslDisabled
+    ? shared
+    : {
+        ...shared,
+        dialectOptions: {
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        },
       },
-    },
-  },
 };
