@@ -12,6 +12,7 @@
  *   node build/server/scripts/seed-demo.js
  */
 import "./bootstrap";
+import type { InferCreationAttributes } from "sequelize";
 import { CollectionPermission, UserRole } from "@shared/types";
 import { parser } from "@server/editor";
 import { Collection, Document, Team, User } from "@server/models";
@@ -176,7 +177,6 @@ async function createDocument(
     parentDocumentId,
     collectionId: collection.id,
     teamId,
-    userId,
     lastModifiedById: userId,
     createdById: userId,
     publishedAt: new Date(),
@@ -202,7 +202,7 @@ async function main() {
       guestSignin: true,
       passkeysEnabled: false,
       authenticationProviders: [],
-    } as never,
+    } as Partial<InferCreationAttributes<Team>>,
     { include: "authenticationProviders" }
   );
 
@@ -214,7 +214,7 @@ async function main() {
         name: attrs.name,
         email: attrs.email,
         role: attrs.role,
-      } as never)
+      } as Partial<InferCreationAttributes<User>>)
     );
   }
   const admin = created[0];
@@ -223,14 +223,13 @@ async function main() {
   for (const spec of collections) {
     const collection = await Collection.scope("withDocumentStructure").create({
       teamId: team.id,
-      userId: admin.id,
       createdById: admin.id,
       name: spec.name,
       description: spec.description,
       icon: spec.icon,
       color: spec.color,
       permission: CollectionPermission.ReadWrite,
-    } as never);
+    } as Partial<InferCreationAttributes<Collection>>);
 
     for (const doc of spec.documents) {
       const parent = await createDocument(doc, {
