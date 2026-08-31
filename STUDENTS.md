@@ -33,6 +33,12 @@ or WSL.
 | **Docker Desktop** | any recent | Only for PostgreSQL, Redis, and Mailpit. The app runs natively. |
 | **Git** | any recent | |
 
+> 💡 **New to MobX?** Outline's React client manages state with [MobX](https://mobx.js.org/the-gist-of-mobx.html) (observables + reactions), not Redux. [*The Gist of MobX*](https://mobx.js.org/the-gist-of-mobx.html) is a 10-minute read — do it before touching anything in `app/stores/`.
+
+> 💡 **New to ProseMirror?** The document editor is built on [ProseMirror](https://prosemirror.net/docs/guide/). Its *Guide* explains the document model, transactions, and plugins — essential reading before working on anything in `shared/editor/`.
+
+> 📖 **Architecture:** Read [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) in this repo first — it maps the server, client, real-time collaboration engine, and plugin system and tells you where to start for common task types.
+
 Clone under a path with **no spaces or apostrophes** (e.g. `~/dev/...`) — shell scripts in this
 monorepo break otherwise.
 
@@ -221,3 +227,65 @@ node build/server/scripts/seed-demo.js
 
 Read `docs/ARCHITECTURE.md` first. Good starter work lives in documents, collections, sharing, and
 permissions — **not** the sync engine, where conflict-resolution bugs are subtle and hard to spot.
+
+---
+
+## Contributing workflow
+
+All team members have write access to this repository, so the team uses a **branch-based** workflow — not forks. Here is the background and the commands.
+
+**Why not forks?** Forking is the standard model for contributing to open-source projects where you _don't_ have write access: you fork to your own GitHub account, clone your fork, and open a PR from your fork back to the original. You will encounter this when contributing to the upstream project. But for your course team — where everyone has write access to the shared repo — it just adds confusion: two clones on your machine, two remotes to keep in sync, merge conflicts that are harder to reason about.
+
+**Branch-based workflow** is what most professional teams use internally. You clone the shared repo once, create a short-lived branch for each issue, push the branch back to the same repo, and open a PR from that branch into `main`. One clone, one remote, full PR workflow.
+
+### For each issue you work on
+
+```bash
+# One-time setup: clone the team repo (skip if already done)
+git clone https://github.com/CSCI-435-SE/outline.git
+cd outline
+
+# Before starting each issue: make sure you are on a fresh main
+git checkout main
+git pull origin main
+
+# Create a branch named for the issue
+git checkout -b feat/issue-17-dark-mode      # new feature
+git checkout -b fix/issue-42-toast-dismiss   # bug fix
+
+# ... make your changes, run tests ...
+
+# Stage and commit
+git add <the files you changed>
+git commit -m "feat: add dark mode toggle (#17)"
+
+# Push the branch to the team repo
+git push origin feat/issue-17-dark-mode
+```
+
+After pushing, GitHub shows a **"Compare & pull request"** banner on the repository page. Click it to open a PR from your branch into `main`. Fill in the description (what changed and why), reference the issue (`Closes #17`), and request a review from a teammate.
+
+**Branch naming:**
+
+| Prefix | Use for |
+|---|---|
+| `feat/issue-<N>-short-description` | new features |
+| `fix/issue-<N>-short-description` | bug fixes |
+| `chore/short-description` | docs, config, dependency updates |
+
+> ⚠️ **`main` is protected — direct pushes are blocked.** All changes go through a reviewed PR. If you accidentally commit to `main` locally, move your changes to a branch before pushing:
+>
+> ```bash
+> git checkout -b fix/issue-42-my-fix   # create branch from your current state
+> git checkout main
+> git reset --hard origin/main          # revert local main to match remote
+> ```
+
+**After your PR is merged**, delete the branch to keep the repo tidy:
+
+```bash
+git checkout main
+git pull origin main
+git branch -d feat/issue-17-dark-mode
+```
+
