@@ -11,24 +11,24 @@ Verified end to end on macOS (Apple Silicon) and on Windows 11 (Docker Desktop, 
 **On Windows, PowerShell and Git Bash both work.** Every `yarn` and `docker` command below is
 identical in either — `yarn` runs package scripts in its own built-in shell, and the scripts in this
 fork use Node's `fs` rather than shelling out to POSIX tools. Only a few plain shell commands differ
-between the two (`openssl`, `mkdir -p`, and the `VAR=value cmd` prefix in step 8); where that
+between the two (`openssl`, `mkdir -p`, and the `VAR=value cmd` prefix in step 9); where that
 happens, the PowerShell equivalent is given right below it.
 
 ---
 
 ## ⚠️ Read this first
 
-1. **There is no real email, and you must use one of the three seeded addresses** (step 6) — not
+1. **There is no real email, and you must use one of the three seeded addresses** (step 7) — not
    your own. Sign-in is a magic link delivered to a fake local mailbox (**Mailpit**,
    <http://localhost:8027>). If you type your own address, the server silently accepts the request (yes, that's a bug)
-   and sends nothing — see [Gotcha #2](#9-gotchas). **The link is in Mailpit, for a address to test upon.**. To play around with the tool, make sure you open both URLs (3003 port and 8027 port)
+   and sends nothing — see [Gotcha #2](#10-gotchas). **The link is in Mailpit, for a address to test upon.**. To play around with the tool, make sure you open both URLs (3003 port and 8027 port)
 2. **You cannot create the first account yourself.** Outline normally bootstraps its first team
    through Google/Slack/OIDC single sign-on, which this course setup does not configure. The seed
    script creates the team and users for you. Until you run it, the login page has **no sign-in
    options at all**.
 3. **Your clone path must have no spaces or apostrophes** (e.g. `~/dev/outline`, not
    `~/Fall'26/outline`). A `'` in the path silently corrupts the production build — see
-   [Gotcha #7](#9-gotchas) for the exact error. If you can't move the clone, use **Path A (Docker)**
+   [Gotcha #7](#10-gotchas) for the exact error. If you can't move the clone, use **Path A (Docker)**
    below; it builds inside the container at a fixed internal path and is immune to this.
 
 ---
@@ -40,7 +40,7 @@ happens, the PowerShell equivalent is given right below it.
 | **Docker Desktop** | any recent | Always required — runs PostgreSQL, Redis, and Mailpit. On Windows use the **WSL2** backend. |
 | **Git** | any recent | |
 | **Node.js** | **22** | Only needed for **Path B** (running the app natively) and for running the test suite. `engines` allows 20.12+, 22, or 24 below 24.17.0, or 26 below 26.3.1, and **22 is the version upstream targets** — pick it if you're installing fresh (`winget install OpenJS.NodeJS.22`, or [nvm-windows](https://github.com/coreybutler/nvm-windows)). If you already have the 24.18+ that `winget install OpenJS.NodeJS` gives you: it sits just outside that range, but Yarn only warns rather than refusing, and install → build → migrate → seed → run was verified end to end on 24.18.0. You don't have to downgrade. |
-| **Yarn** | **4.11.0** | Path B only. Pinned via `packageManager`; run `corepack enable` once. On Windows that writes shims into `C:\Program Files\nodejs` and **needs an Administrator terminal** — see [Gotcha #11](#9-gotchas). Confirm with `yarn -v`. |
+| **Yarn** | **4.11.0** | Path B only. Pinned via `packageManager`; run `corepack enable` once. On Windows that writes shims into `C:\Program Files\nodejs` and **needs an Administrator terminal** — see [Gotcha #11](#10-gotchas). Confirm with `yarn -v`. |
 
 > 💡 **New to MobX?** Outline's React client manages state with [MobX](https://mobx.js.org/the-gist-of-mobx.html) (observables + reactions), not Redux. [*The Gist of MobX*](https://mobx.js.org/the-gist-of-mobx.html) is a 10-minute read — do it before touching anything in `app/stores/`.
 
@@ -60,14 +60,15 @@ its settings. Every image used here is ARM-native.
 | The app itself runs | in a container | directly on your machine via `yarn` |
 | Needs Node/Yarn installed | No | Yes |
 | Hot reload / fast iteration | No — every change needs an image rebuild (~1 min) | **Yes**, once you switch to dev mode — see [section 5](#5-the-edit-run-loop) |
-| Works with a clone path containing spaces/apostrophes | **Yes** | **No** — the build breaks, see [Gotcha #7](#9-gotchas) |
+| Works with a clone path containing spaces/apostrophes | **Yes** | **No** — the build breaks, see [Gotcha #7](#10-gotchas) |
 | Recommended for | A first look at the app, or a machine where the Node toolchain won't cooperate | **Anyone writing code — so, everyone on this course** |
 
 **If you are going to change code, use Path B.** Not because Docker is slow — a rebuild is only
 about a minute (measured below) — but because Path B gives you instant client reloads, a debugger
 port, and debug-level logs, and because **you need Node and Yarn installed for the test suite
-anyway** (section 8). Once they're installed, Path A saves you nothing. [Section 5](#5-the-edit-run-loop)
-is the loop you'll actually live in.
+anyway** (section 9). Once they're installed, Path A saves you nothing. [Section 5](#5-the-edit-run-loop)
+is the loop you'll actually live in, and [section 6](#6-recommended-workflows) is the
+when-to-use-what summary.
 
 Both paths share the same `.env` file and the same PostgreSQL/Redis/Mailpit containers — you can
 follow **section 3 (Configure)** once regardless of which path you pick, then branch at section 4.
@@ -186,7 +187,7 @@ yarn start
 > ⚠️ **`yarn build` is what creates the `build/` directory**, and the last three commands all run out
 > of it. If you skip it, or it dies partway, they fail with
 > `Error: Cannot find module '…\build\server\index.js'` (or `…\build\server\scripts\seed-demo.js`)
-> rather than with anything mentioning the build — see [Gotcha #10](#9-gotchas). A successful
+> rather than with anything mentioning the build — see [Gotcha #10](#10-gotchas). A successful
 > `yarn build` ends by printing `Done!`.
 
 The app is at **<http://localhost:3003>**. `yarn start` runs in the foreground and logs there — leave
@@ -256,7 +257,7 @@ Use the test suite for that instead. Vitest runs the TypeScript directly — **n
 and in watch mode it keeps the process warm and re-runs only what your change touched:
 
 ```bash
-# One-time, if you haven't done section 8 yet:
+# One-time, if you haven't done section 9 yet:
 NODE_ENV=test yarn sequelize db:create
 NODE_ENV=test yarn sequelize db:migrate
 
@@ -327,7 +328,71 @@ automatic.
 
 ---
 
-## 6. Sign in
+## 6. Recommended workflows
+
+| What you're doing | What to run | Why this one |
+| --- | --- | --- |
+| First time, or you just want to see the app work | `docker compose up -d` (Path A) | Nothing to install beyond Docker |
+| Working on UI / React (`app/**`) | infra + `yarn dev:watch` | Save the file, the browser updates instantly |
+| Working on server logic (`server/**`, `plugins/**`) | infra + `yarn test:watch --project server <file>` | ~6–9 s per attempt instead of ~50 s |
+| Checking a server change in the real UI | `yarn dev:watch`, then refresh the tab | Rebuild + restart happen on their own (~50 s) |
+| Anything involving email | `yarn dev:watch` + <http://localhost:8027> | Mailpit catches it — provided `.env.local` sets `SMTP_USERNAME`, or dev mode sends to ethereal.email instead |
+| Writing a database migration | write it, then `yarn db:migrate` by hand | Dev mode deliberately ignores `server/migrations` |
+| Testing permissions across roles | `yarn dev:watch` + two browser profiles | Sign in as `admin@` and `viewer@` side by side |
+| Reproducing a bug someone else reported | Path A rebuild | Closest to what everyone else is running |
+| Your Node/Yarn toolchain is broken | Path A | The container carries a known-good environment |
+| Right before opening a PR | the checklist below | Matches what CI will run |
+
+"infra" above always means the same one command, and you only need it once per reboot:
+
+```bash
+docker compose up -d postgres redis mailpit
+```
+
+### Where each piece should run
+
+| Piece | Where | What it costs you when it changes |
+| --- | --- | --- |
+| PostgreSQL | Docker, always | nothing — you never change it |
+| Redis | Docker, always | nothing |
+| Mailpit | Docker, always | nothing |
+| Outline client (`app/**`) | your machine, via Vite in dev mode | instant |
+| Outline server (`server/**`) | your machine, via nodemon in dev mode | ~50 s |
+| Outline as it ships | Docker, on demand | ~1 min, manual — a check |
+
+### Before you open a PR
+
+CI runs these, so run them yourself first — a failing check is much cheaper to find locally:
+
+```bash
+yarn lint          # oxlint
+yarn tsc           # typecheck, no emit
+yarn test          # full suite
+yarn build         # production build (CI builds the client half, `yarn vite:build`)
+```
+
+If your change touches how the app is packaged or served (dependencies, `Dockerfile.base`,
+`docker-compose.yml`, anything in `server/static`), also rebuild the image once:
+
+```bash
+docker compose build outline && docker compose up -d outline
+```
+
+### Things not to do
+
+- **Don't rebuild the Docker image to test a change you're still iterating on.** That's what dev
+  mode is for. Rebuild when you're done, to confirm it still ships.
+- **Don't install PostgreSQL or Redis natively.**
+- **Don't run `docker compose down -v`** unless you mean to erase the database and uploaded files.
+  Plain `docker compose stop` keeps everything.
+- **Don't edit `.env.development`.** It's tracked and belongs to upstream — put your overrides in
+  `.env.local`, which is gitignored ([section 5](#5-the-edit-run-loop)).
+- **Don't reach for the sync engine** (`server/collaboration/`) for a first issue. Conflict
+  resolution bugs are hard to see and harder to review.
+
+---
+
+## 7. Sign in
 
 The seed script creates three users, one per permission level. There are no passwords.
 
@@ -352,7 +417,7 @@ Playground) and seven documents.
 
 ---
 
-## 7. Try the real-time collaboration
+## 8. Try the real-time collaboration
 
 Worth doing before you pick a task — it's the feature that makes this project interesting.
 
@@ -364,7 +429,7 @@ Worth doing before you pick a task — it's the feature that makes this project 
 
 ---
 
-## 8. Run the tests
+## 9. Run the tests
 
 The test suite runs natively — it needs Node/Yarn installed locally (see Prerequisites) even if
 you're running the app itself via Path A.
@@ -396,7 +461,7 @@ missing sourcemaps for `prosemirror-codemark`.
 
 ---
 
-## 9. Gotchas
+## 10. Gotchas
 
 1. **Login page shows no sign-in options** — you skipped the seed script, or it ran against a
    different database. Re-run the seed command from step 4 for your path.
@@ -464,7 +529,7 @@ missing sourcemaps for `prosemirror-codemark`.
 
 ---
 
-## 10. Daily workflow
+## 11. Daily workflow
 
 **Path A (Docker):**
 
@@ -506,7 +571,7 @@ PostgreSQL and the local file storage each persist in a named Docker volume, so 
 
 ---
 
-## 11. Where things live
+## 12. Where things live
 
 | Path | What's in it |
 | --- | --- |
