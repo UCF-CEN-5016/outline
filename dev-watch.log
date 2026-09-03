@@ -181,3 +181,131 @@
 [frontend] 3:00:42 PM [vite] (client) page reload build/server/error.prod.html
 [backend] Clean previous build...
 [backend] Compiling...
+[backend] Copying static files...
+[backend] Done!
+[frontend] 3:01:28 PM [vite] (client) page reload build/server/error.dev.html
+[frontend] 3:01:28 PM [vite] (client) page reload build/server/error.prod.html
+[backend] (node:21556) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+[backend] (Use `node --trace-deprecation ...` to show where the warning was created)
+[backend] [api] Debugger listening on ws://0.0.0.0:9229/7f476f17-f713-441a-bc48-ef08e898b047
+[backend] [api] For help, see: https://nodejs.org/learn/getting-started/debugging
+[backend] [api] [33mwarn[39m: Running Outline in development mode. To run Outline in production mode set the NODE_ENV env variable to "production" 
+[backend] [api] Debugger listening on ws://0.0.0.0:9230/0ea8f28f-9860-4f00-80ae-cfc8871da916
+[backend] [api] For help, see: https://nodejs.org/learn/getting-started/debugging
+[backend] [api] [32minfo[39m: [lifecycle] Starting cron service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting collaboration service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting websockets service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting admin service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting web service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting worker service 
+[backend] [api] [32minfo[39m: [lifecycle] Listening on http://localhost:3003 / http://localhost:3003 
+[backend] [api] [34mdebug[39m: [multiplayer] Subscribed to collaboration:api-update:* for API updates 
+[backend] [api] [34mdebug[39m: [websockets] Authenticated socket -SzxJgILW83S_D3kAAAB 
+[backend] [api] [32minfo[39m: [worker] CleanupDocumentInsightsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupDeletedDocumentsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying upto 10000 documents older than 30 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupDynamicOAuthClientsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupDeletedTeamsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying upto 10000 teams older than 30 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupOAuthAuthorizationCodeTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting OAuth authorization codes older than one month... 
+[backend] [api] [32minfo[39m: [worker] CleanupExpiredAttachmentsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting expired attachments... 
+[backend] [api] [32minfo[39m: [worker] CleanupOldImportsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupExpiredFileOperationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Expiring file operations older than 15 days... 
+[backend] [api] [32minfo[39m: [worker] InviteReminderTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupOldEventsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] RollupDocumentInsightsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupOldNotificationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying old notifications... 
+[backend] [api] [32minfo[39m: [worker] RollupWeeklyDocumentInsightsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] 0 expired OAuth authorization codes deleted. 
+[backend] [api] [32minfo[39m: [worker] ErrorTimedOutFileOperationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Error file operations running longer than 12 hours... 
+[backend] [api] [32minfo[39m: [task] Removed 0 attachments 
+[backend] [api] [32minfo[39m: [worker] UpdateTeamsAttachmentsSizeTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Recalculating attachment sizes for upto 10000 teams... 
+[backend] [api] [32minfo[39m: [task] Expired 0 file operations 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 notifications older than 12 months... 
+[backend] [api] [32minfo[39m: [worker] ErrorTimedOutImportsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupWebhookDeliveriesTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting WebhookDeliveries older than one week... 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 documents 
+[backend] [api] [32minfo[39m: [task] Updated 0 file operations 
+[backend] [api] [32minfo[39m: [task] Rolled up document insights for 2026-09-01 {"upserted":0}
+[backend] [api] [32minfo[39m: [worker] UpdateDocumentsPopularityScoreTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [34mdebug[39m: [task] Skipping popularity score update, will run at next 12-hour interval (current hour: 15) 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 viewed notifications older than 6 months... 
+[backend] [api] [32minfo[39m: [task] 0 old WebhookDeliveries deleted. 
+[backend] [api] [32minfo[39m: [task] Rolled up document insights for 2026-09-02 {"upserted":0}
+[backend] [api] [32minfo[39m: [task] Rolled up document insights for 2026-09-03 {"upserted":1}
+[backend] [api] [34mdebug[39m: [websockets] Authenticated socket a307JEPZVIjRSskUAAAD 
+[backend] Clean previous build...
+[backend] Compiling...
+[frontend] 3:02:26 PM [vite] (client) page reload build/server/error.dev.html
+[frontend] 3:02:26 PM [vite] (client) page reload build/server/error.prod.html
+[backend] Clean previous build...
+[backend] Compiling...
+[backend] Copying static files...
+[backend] Done!
+[frontend] 3:03:17 PM [vite] (client) page reload build/server/error.dev.html
+[frontend] 3:03:17 PM [vite] (client) page reload build/server/error.prod.html
+[backend] (node:11152) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+[backend] (Use `node --trace-deprecation ...` to show where the warning was created)
+[backend] [api] Debugger listening on ws://0.0.0.0:9229/daeb3b2f-5da4-4d13-8087-0cd9ac83f43d
+[backend] [api] For help, see: https://nodejs.org/learn/getting-started/debugging
+[backend] [api] [33mwarn[39m: Running Outline in development mode. To run Outline in production mode set the NODE_ENV env variable to "production" 
+[backend] [api] Debugger listening on ws://0.0.0.0:9230/d9363ec9-31f7-45bd-8b3f-e57580a6d2d2
+[backend] [api] For help, see: https://nodejs.org/learn/getting-started/debugging
+[backend] [api] [32minfo[39m: [lifecycle] Starting cron service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting collaboration service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting websockets service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting admin service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting web service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting worker service 
+[backend] [api] [32minfo[39m: [lifecycle] Listening on http://localhost:3003 / http://localhost:3003 
+[backend] [api] [34mdebug[39m: [multiplayer] Subscribed to collaboration:api-update:* for API updates 
+[backend] [api] [32minfo[39m: [worker] CleanupDocumentInsightsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupDeletedDocumentsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying upto 10000 documents older than 30 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupDynamicOAuthClientsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupDeletedTeamsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying upto 10000 teams older than 30 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupOAuthAuthorizationCodeTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting OAuth authorization codes older than one month... 
+[backend] [api] [32minfo[39m: [worker] CleanupExpiredAttachmentsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting expired attachments... 
+[backend] [api] [32minfo[39m: [worker] CleanupOldImportsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupExpiredFileOperationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Expiring file operations older than 15 days... 
+[backend] [api] [32minfo[39m: [worker] InviteReminderTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupOldEventsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Removed 0 attachments 
+[backend] [api] [32minfo[39m: [task] 0 expired OAuth authorization codes deleted. 
+[backend] [api] [32minfo[39m: [worker] RollupDocumentInsightsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupOldNotificationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying old notifications... 
+[backend] [api] [32minfo[39m: [worker] RollupWeeklyDocumentInsightsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] ErrorTimedOutFileOperationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Error file operations running longer than 12 hours... 
+[backend] [api] [32minfo[39m: [worker] UpdateTeamsAttachmentsSizeTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Recalculating attachment sizes for upto 10000 teams... 
+[backend] [api] [32minfo[39m: [task] Expired 0 file operations 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 documents 
+[backend] [api] [32minfo[39m: [task] Rolled up document insights for 2026-09-01 {"upserted":0}
+[backend] [api] [32minfo[39m: [worker] ErrorTimedOutImportsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupWebhookDeliveriesTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting WebhookDeliveries older than one week... 
+[backend] [api] [32minfo[39m: [worker] UpdateDocumentsPopularityScoreTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [34mdebug[39m: [task] Skipping popularity score update, will run at next 12-hour interval (current hour: 15) 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 notifications older than 12 months... 
+[backend] [api] [32minfo[39m: [task] Updated 0 file operations 
+[backend] [api] [32minfo[39m: [task] 0 old WebhookDeliveries deleted. 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 viewed notifications older than 6 months... 
+[backend] [api] [32minfo[39m: [task] Rolled up document insights for 2026-09-02 {"upserted":0}
+[backend] [api] [32minfo[39m: [task] Rolled up document insights for 2026-09-03 {"upserted":1}
+[backend] [api] [34mdebug[39m: [websockets] Authenticated socket tDT1OvGf3c7L5v0kAAAB 
+[backend] [api] [32minfo[39m: [http]   <-- GET / 
+[backend] [api] [32minfo[39m: [http]   --> GET / 200 15ms 4.06kb 
+[backend] [api] [34mdebug[39m: [websockets] Authenticated socket WqPYxb4_ZAFyMpAbAAAD 
