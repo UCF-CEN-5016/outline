@@ -16,11 +16,11 @@ same document and see each other's cursors live.
 - **macOS / Linux:** default Terminal.
 
 | Step | What you do  |
-| --- | --- | --- |
+| --- | --- |
 | 1 | Install Docker, Node and Yarn |
 | 2 | Clone the repo | 1 min |
 | 3 | Create two config files (`.env`, `.env.local`) |
-| 4 | Start the services, build once, create the demo data|
+| 4 | Start the services, build once, create the demo data |
 | 5 | Sign in and check it works |
 
 After that, run `yarn dev:watch` during development.
@@ -205,13 +205,13 @@ and type. You'll see the other cursor live.
 
 `yarn dev:watch` watches your files. What happens when you save:
 
-| You change | What happens | How long |
-| --- | --- | --- |
-| Anything in `app/` (the React UI) | The browser updates itself | instant |
-| Anything in `server/` or `plugins/` | The server rebuilds and restarts itself | ~50 s |
-| A file in `server/migrations/` | Nothing — run `yarn db:migrate` yourself | — |
+| You change | What happens |
+| --- | --- |
+| Anything in `app/` (the React UI) | The browser updates itself |
+| Anything in `server/` or `plugins/` | The server rebuilds and restarts itself |
+| A file in `server/migrations/` | Nothing — run `yarn db:migrate` yourself |
 
-You never run a build command by hand while working. Just save and look.
+You never run a build command by hand while working. Just save.
 
 **If you're changing server logic, don't use the browser as your test loop.** Run the test file for
 what you're touching instead — it takes about 6–9 seconds per attempt instead of 50:
