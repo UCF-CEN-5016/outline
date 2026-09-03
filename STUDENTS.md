@@ -7,20 +7,27 @@ sync engine is the most interesting part of this codebase.
 
 📚 **Official documentation:** <https://docs.getoutline.com/s/hosting/>
 
-Verified end to end on macOS (Apple Silicon) and written for POSIX shells — on Windows use Git Bash
-or WSL.
+Verified end to end on macOS (Apple Silicon) and on Windows 11 (Docker Desktop, WSL2 backend).
+**On Windows, run every command in this guide in Git Bash — not PowerShell or cmd.exe.** The build
+scripts shell out to POSIX tools (`cp`, `mkdir -p`, …) that PowerShell doesn't have, and every command
+below assumes a POSIX shell.
 
 ---
 
-## ⚠️ Read this first — two things that will otherwise cost you an hour
+## ⚠️ Read this first
 
-1. **There is no real email.** Sign-in is a magic link delivered to a fake local mailbox
-   (**Mailpit**, <http://localhost:8027>). If you type your address at the login page and then check
-   Gmail, nothing will ever arrive and you'll think the app is broken. **The link is in Mailpit.**
+1. **There is no real email, and you must use one of the three seeded addresses** (step 5) — not
+   your own. Sign-in is a magic link delivered to a fake local mailbox (**Mailpit**,
+   <http://localhost:8027>). If you type your own address, the server silently accepts the request (yes, that's a bug)
+   and sends nothing — see [Gotcha #2](#8-gotchas). **The link is in Mailpit, for a address to test upon.**. To play around with the tool, make sure you open both URLs (3003 port and 8027 port)
 2. **You cannot create the first account yourself.** Outline normally bootstraps its first team
    through Google/Slack/OIDC single sign-on, which this course setup does not configure. The seed
-   script in step 4 creates the team and users for you. Until you run it, the login page has **no
-   sign-in options at all**.
+   script creates the team and users for you. Until you run it, the login page has **no sign-in
+   options at all**.
+3. **Your clone path must have no spaces or apostrophes** (e.g. `~/dev/outline`, not
+   `~/Fall'26/outline`). A `'` in the path silently corrupts the production build — see
+   [Gotcha #7](#8-gotchas) for the exact error. If you can't move the clone, use **Path A (Docker)**
+   below; it builds inside the container at a fixed internal path and is immune to this.
 
 ---
 
@@ -28,10 +35,10 @@ or WSL.
 
 | Tool | Version | Notes |
 | --- | --- | --- |
-| **Node.js** | **22** | `engines` allows 20.12+, 22, or 24 < 24.17 — use 22. |
-| **Yarn** | **4.11.0** | Pinned via `packageManager`; run `corepack enable` once. |
-| **Docker Desktop** | any recent | Only for PostgreSQL, Redis, and Mailpit. The app runs natively. |
+| **Docker Desktop** | any recent | Always required — runs PostgreSQL, Redis, and Mailpit. On Windows use the **WSL2** backend. |
 | **Git** | any recent | |
+| **Node.js** | **22** | Only needed for **Path B** (running the app natively) and for running the test suite. `engines` allows 20.12+, 22, or 24 below 24.17.0, or 26 below 26.3.1 — but **22 is the simplest reliable choice**. ⚠️ The Node 24 that `winget install OpenJS.NodeJS` installs on Windows is **24.18+, which is *not* in the allowed range** — install 22 instead (e.g. `winget install OpenJS.NodeJS.22`, or via [nvm-windows](https://github.com/coreybutler/nvm-windows)). |
+| **Yarn** | **4.11.0** | Path B only. Pinned via `packageManager`; run `corepack enable` once. |
 
 > 💡 **New to MobX?** Outline's React client manages state with [MobX](https://mobx.js.org/the-gist-of-mobx.html) (observables + reactions), not Redux. [*The Gist of MobX*](https://mobx.js.org/the-gist-of-mobx.html) is a 10-minute read — do it before touching anything in `app/stores/`.
 
@@ -39,24 +46,28 @@ or WSL.
 
 > 📖 **Architecture:** Read [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) in this repo first — it maps the server, client, real-time collaboration engine, and plugin system and tells you where to start for common task types.
 
-Clone under a path with **no spaces or apostrophes** (e.g. `~/dev/...`) — shell scripts in this
-monorepo break otherwise.
-
 **macOS:** if Docker Desktop won't start and reports `VZErrorDomain Code=1`, **disable Rosetta** in
 its settings. Every image used here is ARM-native.
 
 ---
 
-## 2. Start the services
+## 2. Pick a path
+
+| | **Path A — Docker** | **Path B — Native** |
+| --- | --- | --- |
+| The app itself runs | in a container | directly on your machine via `yarn` |
+| Needs Node/Yarn installed | No | Yes |
+| Hot reload / fast iteration | No (rebuild the image after every change) | No on this production path either — see [Gotcha #8](#8-gotchas) |
+| Works with a clone path containing spaces/apostrophes | **Yes** | **No** — the build breaks, see [Gotcha #7](#8-gotchas) |
+| Recommended for | Windows, or anyone who just wants it running to try the app | macOS/Linux, or anyone actively modifying server/client code |
+
+Both paths share the same `.env` file and the same PostgreSQL/Redis/Mailpit containers — you can
+follow **section 3 (Configure)** once regardless of which path you pick, then branch at section 4.
+You can also switch paths later without reconfiguring anything.
 
 ```bash
 git clone <your-team-fork-url>
 cd outline
-corepack enable
-
-docker compose up -d postgres redis
-docker run -d --name outline-mailpit \
-  -p 127.0.0.1:1027:1025 -p 127.0.0.1:8027:8025 axllent/mailpit
 ```
 
 ---
@@ -65,10 +76,11 @@ docker run -d --name outline-mailpit \
 
 ```bash
 cp .env.sample .env
-openssl rand -hex 32    # run twice — one value for each secret below
+openssl rand -hex 32    # run twice — one value for each secret (SECRET_KEY and UTILS_SECRET)
 ```
 
-Set these in `.env` (the rest of the sample can stay as-is):
+Set these in `.env`. 
+the four `SMTP_*` lines at the bottom do **not** exist in `.env.sample` and need to be added.
 
 ```ini
 NODE_ENV=production
@@ -84,9 +96,13 @@ PGSSLMODE=disable
 REDIS_URL=redis://127.0.0.1:6379
 
 FILE_STORAGE=local
+# Path B (native): an absolute Windows/macOS/Linux path you'll create in step 4, e.g.
+#   C:/Users/you/outline-data  or  /Users/you/outline-data
+# Path A (Docker): ignored — docker-compose.yml points the container at its own
+# internal path and stores it in a named volume, so this value doesn't matter for Path A.
 FILE_STORAGE_LOCAL_ROOT_DIR=<absolute path to a writable folder you create>
 
-# Mailpit — where your sign-in links appear
+# Mailpit — where your sign-in links appear. These four keys aren't in .env.sample; add them.
 SMTP_HOST=127.0.0.1
 SMTP_PORT=1027
 SMTP_FROM_EMAIL=hello@example.com
@@ -95,21 +111,57 @@ SMTP_DISABLE_STARTTLS=true
 
 RATE_LIMITER_ENABLED=false
 ENABLE_UPDATES=false
-```
 
-Port **3003** avoids clashes with the other course projects (3000 cal.diy, 3001 Actual,
-3002 Excalidraw, 3030 Gitea, 4000 Discourse).
+# .env.sample ships these with placeholder text, not blank — leave them non-empty and
+# the login page shows a "Continue with Slack" button that 500s (see Gotcha #3). Blank
+# them out so email is the only sign-in option, matching what the seed script intends.
+SLACK_CLIENT_ID=
+SLACK_CLIENT_SECRET=
+SLACK_APP_ID=
+```
 
 ---
 
-## 4. Build, migrate, seed, run
+## 4. Build, migrate, test, run
+
+### Path A — Docker
+
+One command builds the app image and starts the backend services — PostgreSQL (database), Redis (database caching), Mailpit (email services), and Outline:
 
 ```bash
+docker compose up -d
+```
+
+The first run builds the app image (`yarn install` + `yarn build` inside the container, a few
+minutes). Then migrate and seed by running one-off commands against the running stack:
+
+```bash
+docker compose run --rm outline yarn db:migrate         # a few hundred migrations, a few seconds
+docker compose run --rm outline node build/server/scripts/seed-demo.js
+```
+
+The app is at **<http://localhost:3003>**. If migrate reports a `Validation error` about a
+duplicate key on the first try, just re-run the same command — it's idempotent and this resolves
+on retry (occasionally Postgres reports itself ready a moment before it truly is).
+
+To rebuild after pulling new code:
+
+```bash
+docker compose build outline
+docker compose up -d outline
+docker compose run --rm outline yarn db:migrate
+```
+
+### Path B — Native
+
+```bash
+docker compose up -d postgres redis mailpit
 mkdir -p <the FILE_STORAGE_LOCAL_ROOT_DIR path you chose>
 
+corepack enable
 yarn install --immutable
 yarn build                                # ~15 s
-yarn db:migrate                           # 129 migrations, ~5 s
+yarn db:migrate                           # a few hundred migrations, a few seconds
 node build/server/scripts/seed-demo.js    # creates the team, users and demo content
 yarn start
 ```
@@ -157,19 +209,15 @@ Worth doing before you pick a task — it's the feature that makes this project 
 
 ## 7. Run the tests
 
+The test suite runs natively — it needs Node/Yarn installed locally (see Prerequisites) even if
+you're running the app itself via Path A. On Windows, run these in Git Bash.
+
 ```bash
 NODE_ENV=test yarn sequelize db:drop      # first time only
 NODE_ENV=test yarn sequelize db:create
 NODE_ENV=test yarn sequelize db:migrate
 
 yarn test                                 # full suite, ~70 s
-```
-
-Expected baseline — everything passes:
-
-```
-Test Files  292 passed (292)
-     Tests  3669 passed | 6 skipped (3675)
 ```
 
 Narrower runs: `yarn test:server`, `yarn test:app`, `yarn test:shared`, `yarn test:watch`. The suite
@@ -183,35 +231,75 @@ missing sourcemaps for `prosemirror-codemark`.
 ## 8. Gotchas
 
 1. **Login page shows no sign-in options** — you skipped the seed script, or it ran against a
-   different database. Re-run `node build/server/scripts/seed-demo.js`.
-2. **The magic link never arrives** — it's in Mailpit (<http://localhost:8027>), not your inbox.
-3. **You click the link and land back on the login page** — it expired (10-minute limit). Check the
+   different database. Re-run the seed command from step 4 for your path.
+2. **The magic link never arrives, even though the request "succeeded"** — almost always because
+   the email you typed doesn't exactly match one of the three seeded addresses
+   (`admin@example.com`, `member@example.com`, `viewer@example.com`). The server deliberately
+   returns `{"success":true}` for *any* email, seeded or not, so it can't be used to probe which
+   accounts exist — so a non-matching address silently sends nothing and looks identical to success.
+   Use one of the three exact addresses. If it still doesn't show up, confirm you're checking
+   Mailpit (<http://localhost:8027>), not your real inbox.
+3. **"Continue with Slack" appears on the login page and 500s when clicked**
+   (`Error: Cannot send secure cookie over unencrypted connection`) — `.env.sample` ships
+   `SLACK_CLIENT_ID`/`SLACK_CLIENT_SECRET`/`SLACK_APP_ID` with non-empty placeholder text rather
+   than blank, so the app thinks Slack sign-in is configured and shows the button. It always 500s
+   locally regardless of the (fake) credentials, because Outline hardcodes secure cookies whenever
+   `NODE_ENV=production`, and `http://localhost` isn't HTTPS. Fix: blank all three `SLACK_*` keys in
+   `.env` (step 3 above) so email is the only sign-in option, then recreate the app so it picks up
+   the change — `docker compose up -d --force-recreate outline` (Path A) or restart `yarn start`
+   (Path B).
+4. **You click the link and land back on the login page** — it expired (10-minute limit). Check the
    URL bar for `notice=auth-error`. Request a new one and click it right away.
-4. **Port conflicts** — this project uses 3003 (app), 5432 (Postgres), 6379 (Redis), 8027/1027
+5. **Port conflicts** — this project uses 3003 (app), 5432 (Postgres), 6379 (Redis), 8027/1027
    (Mailpit). Find the culprit with `lsof -nP -iTCP:3003 -sTCP:LISTEN`, or
    `netstat -ano | findstr "3003"` on Windows.
-5. **Don't run `make up` unless you want the dev server.** It needs **mkcert** for local HTTPS and
-   serves the client from a separate Vite server on port **3001**. The production path above is one
-   process on one port and needs neither.
-6. **No hot reload on this path.** After changing server code run `yarn build:server`; after
-   changing client code run `yarn build`. Then restart `yarn start`.
+6. **Don't run `make up` unless you want the dev server.** It needs **mkcert** for local HTTPS and
+   serves the client from a separate Vite server on port **3001**. The paths above are one process
+   on one port and need neither.
+7. **`yarn build` fails with a cryptic "Missing semicolon" error inside `workbox-build`/`sw.js`,
+   pointing at a file path containing your clone directory** — your clone path has a space or `'` in
+   it (e.g. `Fall'26 TA`). The service-worker build embeds the absolute file path as a JS string
+   literal, and the stray `'` terminates it early. Fix: either move the clone somewhere with no
+   spaces or apostrophes and re-run `yarn build`, or switch to **Path A (Docker)** — the build runs
+   inside the container at a fixed path (`/opt/outline`) and never sees your host path.
+8. **No hot reload on either path.** Path B: after changing server code run `yarn build:server`;
+   after changing client code run `yarn build`. Then restart `yarn start`. Path A: rebuild the image
+   (`docker compose build outline && docker compose up -d outline`).
+9. **(Windows) `cp`/`mkdir`/etc. "is not recognized" when running a `yarn` script in PowerShell** —
+   PowerShell doesn't have these POSIX tools. Run all commands in this guide from Git Bash instead.
 
 ---
 
 ## 9. Daily workflow
 
+**Path A (Docker):**
+
 ```bash
-docker compose up -d postgres redis
-docker start outline-mailpit
+docker compose up -d
+```
+
+**Path B (Native):**
+
+```bash
+docker compose up -d postgres redis mailpit
 yarn start
 ```
 
 Reset to a clean seeded state:
 
 ```bash
+# Path A
+docker compose run --rm outline yarn db:reset
+docker compose run --rm outline node build/server/scripts/seed-demo.js
+
+# Path B
 yarn db:reset
 node build/server/scripts/seed-demo.js
 ```
+
+PostgreSQL and the local file storage each persist in a named Docker volume, so stopping containers
+(`docker compose stop`, or restarting your machine) doesn't lose data. `docker compose down -v`
+**does** delete both volumes — only use `-v` when you actually want a clean slate.
 
 ---
 
@@ -288,4 +376,3 @@ git checkout main
 git pull origin main
 git branch -d feat/issue-17-dark-mode
 ```
-
