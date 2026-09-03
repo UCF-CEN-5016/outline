@@ -84,3 +84,115 @@
 [backend] [api] [34mdebug[39m: [multiplayer] No changes for document.8a57a5ed-5d78-4d87-a2d4-7a5f8396ce09 
 [backend] [api] [32minfo[39m: [http]   <-- GET / 
 [backend] [api] [32minfo[39m: [http]   --> GET / 200 44ms 4.06kb 
+[backend] [api] [32minfo[39m: [worker] CleanupDeletedDocumentsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying upto 10000 documents older than 30 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupDeletedTeamsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying upto 10000 teams older than 30 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupExpiredAttachmentsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting expired attachments... 
+[backend] [api] [32minfo[39m: [worker] CleanupExpiredFileOperationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Expiring file operations older than 15 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupOldEventsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupOldNotificationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying old notifications... 
+[backend] [api] [32minfo[39m: [worker] ErrorTimedOutFileOperationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Error file operations running longer than 12 hours... 
+[backend] [api] [32minfo[39m: [worker] ErrorTimedOutImportsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] UpdateDocumentsPopularityScoreTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [34mdebug[39m: [task] Skipping popularity score update, will run at next 12-hour interval (current hour: 16) 
+[backend] [api] [32minfo[39m: [task] Removed 0 attachments 
+[backend] [api] [32minfo[39m: [task] Expired 0 file operations 
+[backend] [api] [32minfo[39m: [task] Updated 0 file operations 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 notifications older than 12 months... 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 documents 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 viewed notifications older than 6 months... 
+[backend] [api] [34mdebug[39m: [websockets] Authenticated socket 14sc3WX5Ps9fNZrXAAAF 
+[backend] [api] [34mdebug[39m: [websockets] Authenticated socket KJtA4-QVUyOzUTUjAAAH 
+[backend] [api] [34mdebug[39m: [websockets] Authenticated socket hf2uG4PgXFreiMRBAAAJ 
+[backend] [api] [34mdebug[39m: [websockets] Authenticated socket ONFFoVYfEYoCTpacAAAL 
+[backend] [api] Unhandled promise rejection
+[backend] [api] ExecutionError: The operation was unable to achieve a quorum during its retry window.
+[backend] [api]     at Redlock._execute (C:\dev\Sprints\outline\node_modules\redlock\dist\cjs\index.js:296:23)
+[backend] [api]     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[backend] [api]     at async CacheHelper.getDataOrSet (C:\dev\Sprints\outline\build\server\utils\CacheHelper.js:70:17)
+[backend] [api]     at async User.collectionIds (C:\dev\Sprints\outline\build\server\models\User.js:411:20)
+[backend] [api]     at async Promise.all (index 0)
+[backend] [api]     at async authenticated (C:\dev\Sprints\outline\build\server\services\websockets.js:196:39) {
+[backend] [api]   attempts: [
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] }, Promise { [Object] }, Promise { [Object] },
+[backend] [api]     Promise { [Object] },
+[backend] [api]     ... 21 more items
+[backend] [api]   ]
+[backend] [api] }
+[backend] [api] {
+[backend] [api]   stack: 'ExecutionError: The operation was unable to achieve a quorum during its retry window.\n' +
+[backend] [api]     '    at Redlock._execute (C:\\dev\\Sprints\\outline\\node_modules\\redlock\\dist\\cjs\\index.js:296:23)\n' +
+[backend] [api]     '    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n' +
+[backend] [api]     '    at async CacheHelper.getDataOrSet (C:\\dev\\Sprints\\outline\\build\\server\\utils\\CacheHelper.js:70:17)\n' +
+[backend] [api]     '    at async User.collectionIds (C:\\dev\\Sprints\\outline\\build\\server\\models\\User.js:411:20)\n' +
+[backend] [api]     '    at async Promise.all (index 0)\n' +
+[backend] [api]     '    at async authenticated (C:\\dev\\Sprints\\outline\\build\\server\\services\\websockets.js:196:39)'
+[backend] [api] }
+[backend] [api] [32minfo[39m: [worker] CleanupDeletedDocumentsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying upto 10000 documents older than 30 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupDeletedTeamsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying upto 10000 teams older than 30 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupExpiredAttachmentsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting expired attachments... 
+[backend] [api] [32minfo[39m: [worker] CleanupExpiredFileOperationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Expiring file operations older than 15 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupOldEventsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupOldNotificationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying old notifications... 
+[backend] [api] [32minfo[39m: [worker] ErrorTimedOutFileOperationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Error file operations running longer than 12 hours... 
+[backend] [api] [32minfo[39m: [worker] ErrorTimedOutImportsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] UpdateDocumentsPopularityScoreTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [34mdebug[39m: [task] Skipping popularity score update, will run at next 12-hour interval (current hour: 17) 
+[backend] [api] [32minfo[39m: [task] Removed 0 attachments 
+[backend] [api] [32minfo[39m: [task] Expired 0 file operations 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 notifications older than 12 months... 
+[backend] [api] [32minfo[39m: [task] Updated 0 file operations 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 documents 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 viewed notifications older than 6 months... 
+[frontend] 5:40:34 PM [vite] (client) page reload package.json
+[backend] [api] [32minfo[39m: [http]   <-- GET / 
+[backend] [api] [32minfo[39m: [http]   --> GET / 200 49ms 1.58kb 
+[backend] [api] [32minfo[39m: [http]   <-- POST /api/auth.info 
+[backend] [api] [32minfo[39m: [http]   --> POST /api/auth.info 200 91ms 1.12kb 
+[backend] [api] [32minfo[39m: [http]   <-- POST /api/auth.config 
+[backend] [api] [32minfo[39m: [http]   --> POST /api/auth.config 200 14ms 146b 
+[backend] [api] [32minfo[39m: [http]   <-- GET /static/sw.js 
+[backend] [api] [32minfo[39m: [http]   --> GET /static/sw.js 200 13ms 1.58kb 
