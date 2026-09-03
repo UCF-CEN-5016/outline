@@ -1,0 +1,183 @@
+(node:16292) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[frontend] No local SSL certs found, HTTPS will not be available
+[frontend] 
+[frontend]   VITE v8.0.16  ready in 305 ms
+[frontend] 
+[frontend]   ➜  Local:   http://localhost:3001/static/
+[frontend]   ➜  Network: http://192.168.0.55:3001/static/
+[frontend]   ➜  Network: http://172.22.144.1:3001/static/
+[frontend]   ➜  Network: http://172.23.96.1:3001/static/
+[backend] Clean previous build...
+[backend] Compiling...
+[frontend] 2:41:01 PM [vite] (client) page reload build/server/error.dev.html
+[frontend] 2:41:01 PM [vite] (client) page reload build/server/error.prod.html
+[backend] Copying static files...
+[frontend] 2:41:40 PM [vite] (client) page reload build/server/error.dev.html
+[backend] Done!
+[frontend] 2:41:40 PM [vite] (client) page reload build/server/error.prod.html
+[backend] (node:23548) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+[backend] (Use `node --trace-deprecation ...` to show where the warning was created)
+[backend] [api] Debugger listening on ws://0.0.0.0:9229/58bf3860-358a-4fe8-98e9-737c4007f7d0
+[backend] [api] For help, see: https://nodejs.org/learn/getting-started/debugging
+[backend] [api] [33mwarn[39m: Running Outline in development mode. To run Outline in production mode set the NODE_ENV env variable to "production" 
+[backend] [api] Debugger listening on ws://0.0.0.0:9230/93072ded-b662-4e0e-8d81-f7f5ba97372f
+[backend] [api] For help, see: https://nodejs.org/learn/getting-started/debugging
+[backend] [api] [32minfo[39m: [lifecycle] Starting cron service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting collaboration service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting websockets service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting admin service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting web service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting worker service 
+[backend] [api] [32minfo[39m: [lifecycle] Listening on http://localhost:3003 / http://localhost:3003 
+[backend] [api] [34mdebug[39m: [multiplayer] Subscribed to collaboration:api-update:* for API updates 
+[backend] [api] [32minfo[39m: [worker] CleanupDocumentInsightsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupDeletedDocumentsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying upto 10000 documents older than 30 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupDynamicOAuthClientsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupDeletedTeamsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying upto 10000 teams older than 30 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupOAuthAuthorizationCodeTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting OAuth authorization codes older than one month... 
+[backend] [api] [32minfo[39m: [worker] CleanupExpiredAttachmentsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting expired attachments... 
+[backend] [api] [32minfo[39m: [worker] CleanupOldImportsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupExpiredFileOperationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Expiring file operations older than 15 days... 
+[backend] [api] [32minfo[39m: [worker] InviteReminderTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupOldEventsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] 0 expired OAuth authorization codes deleted. 
+[backend] [api] [32minfo[39m: [task] Removed 0 attachments 
+[backend] [api] [32minfo[39m: [worker] RollupDocumentInsightsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupOldNotificationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying old notifications... 
+[backend] [api] [32minfo[39m: [worker] RollupWeeklyDocumentInsightsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Expired 0 file operations 
+[backend] [api] [32minfo[39m: [worker] ErrorTimedOutFileOperationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Error file operations running longer than 12 hours... 
+[backend] [api] [32minfo[39m: [worker] UpdateTeamsAttachmentsSizeTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Recalculating attachment sizes for upto 10000 teams... 
+[backend] [api] [32minfo[39m: [worker] ErrorTimedOutImportsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Destroyed 0 documents 
+[backend] [api] [32minfo[39m: [task] Rolled up document insights for 2026-09-01 {"upserted":0}
+[backend] [api] [32minfo[39m: [worker] CleanupWebhookDeliveriesTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting WebhookDeliveries older than one week... 
+[backend] [api] [32minfo[39m: [worker] UpdateDocumentsPopularityScoreTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [34mdebug[39m: [task] Skipping popularity score update, will run at next 12-hour interval (current hour: 14) 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 notifications older than 12 months... 
+[backend] [api] [32minfo[39m: [task] Updated 0 file operations 
+[backend] [api] [32minfo[39m: [task] 0 old WebhookDeliveries deleted. 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 viewed notifications older than 6 months... 
+[backend] [api] [32minfo[39m: [task] Rolled up document insights for 2026-09-02 {"upserted":0}
+[backend] [api] [32minfo[39m: [task] Rolled up document insights for 2026-09-03 {"upserted":1}
+[backend] [api] [32minfo[39m: [http]   <-- POST /auth/email 
+[backend] [api] [32minfo[39m: [worker] EmailTask running {"templateName":"SigninEmail","props":{"to":"admin@example.com","language":"en_US","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg2ZGM1YzUxLTM4OWMtNDA4Mi05NjMwLTIwMGE1NzI3YjhlYiIsImlwIjoiOjoxIiwiY3JlYXRlZEF0IjoiMjAyNi0wOS0wM1QxODo0MjowMC4xNjNaIiwidHlwZSI6ImVtYWlsLXNpZ25pbiIsImlhdCI6MTc4ODQ2MDkyMH0.xQ6ejzW4AkE6UvN6obnpQc77ScTllMF-tlzgU0VDVkA","teamUrl":"http://localhost:3003","client":"web"}}
+[backend] [api] [34mdebug[39m: [email] Sign-In link: http://localhost:3003/auth/email.callback?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg2ZGM1YzUxLTM4OWMtNDA4Mi05NjMwLTIwMGE1NzI3YjhlYiIsImlwIjoiOjoxIiwiY3JlYXRlZEF0IjoiMjAyNi0wOS0wM1QxODo0MjowMC4xNjNaIiwidHlwZSI6ImVtYWlsLXNpZ25pbiIsImlhdCI6MTc4ODQ2MDkyMH0.xQ6ejzW4AkE6UvN6obnpQc77ScTllMF-tlzgU0VDVkA&client=web 
+[backend] [api] [34mdebug[39m: [email] Sending email:
+[backend] [api] 
+[backend] [api] --------------
+[backend] [api] From:      hello@example.com
+[backend] [api] To:        admin@example.com
+[backend] [api] Subject:   Magic Sign-in Link
+[backend] [api] Preview:   Here’s your link to signin to Outline.
+[backend] [api] --------------
+[backend] [api] 
+[backend] [api] 
+[backend] [api] Use the link below to sign in:
+[backend] [api] 
+[backend] [api] http://localhost:3003/auth/email.callback?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg2ZGM1YzUxLTM4OWMtNDA4Mi05NjMwLTIwMGE1NzI3YjhlYiIsImlwIjoiOjoxIiwiY3JlYXRlZEF0IjoiMjAyNi0wOS0wM1QxODo0MjowMC4xNjNaIiwidHlwZSI6ImVtYWlsLXNpZ25pbiIsImlhdCI6MTc4ODQ2MDkyMH0.xQ6ejzW4AkE6UvN6obnpQc77ScTllMF-tlzgU0VDVkA&client=web
+[backend] [api] 
+[backend] [api] If the link expired you can request a new one from your team's signin page at: http://localhost:3003
+[backend] [api]  
+[backend] [api] [32minfo[39m: [email] Sending email "Magic Sign-in Link" to admin@example.com 
+[backend] [api] [32minfo[39m: [http]   --> POST /auth/email 200 69ms 16b 
+[backend] [api] [32minfo[39m: [http]   <-- GET / 
+[backend] [api] [32minfo[39m: [http]   --> GET / 200 11ms 4.06kb 
+[backend] [api] [34mdebug[39m: [websockets] Authenticated socket Lau9AKp7OfZVXkxqAAAB 
+[backend] [api] [34mdebug[39m: [websockets] Authenticated socket UtGxexSCvlIXEHLLAAAD 
+[backend] [api] [32minfo[39m: [http]   <-- GET / 
+[backend] [api] [32minfo[39m: [http]   --> GET / 200 17ms 4.06kb 
+[backend] [api] (node:29680) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+[backend] [api] (Use `node --trace-deprecation ...` to show where the warning was created)
+[backend] [api] [32minfo[39m: [multiplayer] New connection to "document.8a57a5ed-5d78-4d87-a2d4-7a5f8396ce09" 
+[backend] [api] [32minfo[39m: [database] Document 8a57a5ed-5d78-4d87-a2d4-7a5f8396ce09 is in database state 
+[backend] [api] [32minfo[39m: [multiplayer] Loaded document "document.8a57a5ed-5d78-4d87-a2d4-7a5f8396ce09" {"userId":"86dc5c51-389c-4082-9630-200a5727b8eb"}
+[backend] [api] [34mdebug[39m: [multiplayer] 1 connection to "document.8a57a5ed-5d78-4d87-a2d4-7a5f8396ce09" 
+[backend] [api] [32minfo[39m: [multiplayer] Authenticated connection to "document.8a57a5ed-5d78-4d87-a2d4-7a5f8396ce09" 
+[frontend] 2:55:01 PM [vite] (client) page reload build/server/error.dev.html
+[frontend] 2:55:01 PM [vite] (client) page reload build/server/error.prod.html
+[frontend] 2:55:40 PM [vite] (client) page reload build/server/error.dev.html
+[frontend] 2:55:40 PM [vite] (client) page reload build/server/error.prod.html
+[backend] [api] [34mdebug[39m: [multiplayer] 0 connections to "document.8a57a5ed-5d78-4d87-a2d4-7a5f8396ce09" 
+[backend] [api] [32minfo[39m: [multiplayer] Closed connection to "document.8a57a5ed-5d78-4d87-a2d4-7a5f8396ce09" {"userId":"86dc5c51-389c-4082-9630-200a5727b8eb"}
+[backend] [api] [34mdebug[39m: [multiplayer] No changes for document.8a57a5ed-5d78-4d87-a2d4-7a5f8396ce09 
+[backend] Clean previous build...
+[backend] Compiling...
+[frontend] 2:58:15 PM [vite] (client) page reload build/server/error.dev.html
+[frontend] 2:58:15 PM [vite] (client) page reload build/server/error.prod.html
+[backend] Copying static files...
+[backend] Done!
+[frontend] 2:58:55 PM [vite] (client) page reload build/server/error.dev.html
+[frontend] 2:58:55 PM [vite] (client) page reload build/server/error.prod.html
+[backend] (node:28872) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+[backend] (Use `node --trace-deprecation ...` to show where the warning was created)
+[backend] [api] Debugger listening on ws://0.0.0.0:9229/ad4c344f-8742-415f-a778-6b9f40b1552c
+[backend] [api] For help, see: https://nodejs.org/learn/getting-started/debugging
+[backend] [api] [33mwarn[39m: Running Outline in development mode. To run Outline in production mode set the NODE_ENV env variable to "production" 
+[backend] [api] Debugger listening on ws://0.0.0.0:9230/67517364-5124-45b7-be1e-3b64bcd87bac
+[backend] [api] For help, see: https://nodejs.org/learn/getting-started/debugging
+[backend] [api] [32minfo[39m: [lifecycle] Starting cron service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting collaboration service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting websockets service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting admin service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting web service 
+[backend] [api] [32minfo[39m: [lifecycle] Starting worker service 
+[backend] [api] [32minfo[39m: [lifecycle] Listening on http://localhost:3003 / http://localhost:3003 
+[backend] [api] [34mdebug[39m: [multiplayer] Subscribed to collaboration:api-update:* for API updates 
+[backend] [api] [32minfo[39m: [worker] CleanupDocumentInsightsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupDeletedDocumentsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying upto 10000 documents older than 30 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupDynamicOAuthClientsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupDeletedTeamsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying upto 10000 teams older than 30 days... 
+[backend] [api] [32minfo[39m: [worker] CleanupOAuthAuthorizationCodeTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting OAuth authorization codes older than one month... 
+[backend] [api] [32minfo[39m: [worker] CleanupExpiredAttachmentsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting expired attachments... 
+[backend] [api] [32minfo[39m: [worker] CleanupOldImportsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupExpiredFileOperationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Expiring file operations older than 15 days... 
+[backend] [api] [32minfo[39m: [worker] InviteReminderTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupOldEventsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] 0 expired OAuth authorization codes deleted. 
+[backend] [api] [32minfo[39m: [task] Removed 0 attachments 
+[backend] [api] [32minfo[39m: [worker] RollupDocumentInsightsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupOldNotificationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Permanently destroying old notifications... 
+[backend] [api] [32minfo[39m: [worker] RollupWeeklyDocumentInsightsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] ErrorTimedOutFileOperationsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Error file operations running longer than 12 hours... 
+[backend] [api] [32minfo[39m: [task] Expired 0 file operations 
+[backend] [api] [32minfo[39m: [worker] UpdateTeamsAttachmentsSizeTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Recalculating attachment sizes for upto 10000 teams... 
+[backend] [api] [32minfo[39m: [worker] ErrorTimedOutImportsTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [worker] CleanupWebhookDeliveriesTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [32minfo[39m: [task] Deleting WebhookDeliveries older than one week... 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 documents 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 notifications older than 12 months... 
+[backend] [api] [32minfo[39m: [task] Rolled up document insights for 2026-09-01 {"upserted":0}
+[backend] [api] [32minfo[39m: [task] 0 old WebhookDeliveries deleted. 
+[backend] [api] [32minfo[39m: [task] Updated 0 file operations 
+[backend] [api] [32minfo[39m: [worker] UpdateDocumentsPopularityScoreTask running {"limit":10000,"partition":{"partitionIndex":0,"partitionCount":1}}
+[backend] [api] [34mdebug[39m: [task] Skipping popularity score update, will run at next 12-hour interval (current hour: 14) 
+[backend] [api] [32minfo[39m: [task] Destroyed 0 viewed notifications older than 6 months... 
+[backend] [api] [32minfo[39m: [task] Rolled up document insights for 2026-09-02 {"upserted":0}
+[backend] [api] [32minfo[39m: [task] Rolled up document insights for 2026-09-03 {"upserted":1}
+[backend] [api] [34mdebug[39m: [websockets] Authenticated socket AadrrhkbINwcv7e8AAAB 
+[backend] [api] [34mdebug[39m: [websockets] Authenticated socket QI3ojWapwQV_71h5AAAD 
+[backend] Clean previous build...
+[backend] Compiling...
+[frontend] 3:00:42 PM [vite] (client) page reload build/server/error.dev.html
+[frontend] 3:00:42 PM [vite] (client) page reload build/server/error.prod.html
+[backend] Clean previous build...
+[backend] Compiling...

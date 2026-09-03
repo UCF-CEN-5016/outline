@@ -1,0 +1,5 @@
+# Keep the working tree LF on every platform. Without this, a Windows clone
+# (core.autocrlf=true) gets CRLF source files, and the i18n extraction step of
+# `yarn build` then writes \r\n into the translation keys — dirtying
+# shared/i18n/locales/en_US/translation.json on every build.
+* text=auto eol=lf

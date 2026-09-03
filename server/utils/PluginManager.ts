@@ -147,8 +147,10 @@ export class PluginManager {
     }
     const rootDir = env.ENVIRONMENT === "test" ? "" : "build";
 
+    // glob requires forward slashes even on Windows – path.join would emit
+    // backslashes there and silently match nothing.
     glob
-      .sync(path.join(rootDir, "plugins/*/server/index.[jt]s"))
+      .sync(path.posix.join(rootDir, "plugins/*/server/index.[jt]s"))
       .forEach((filePath: string) => {
         try {
           require(path.join(process.cwd(), filePath));

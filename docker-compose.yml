@@ -4,6 +4,12 @@ services:
     ports:
       - "127.0.0.1:6379:6379"
     user: "redis:redis"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
   postgres:
     image: postgres
     ports:
@@ -13,3 +19,54 @@ services:
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: outline
     user: "postgres:postgres"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d outline"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - postgres-data:/var/lib/postgresql
+
+  # Fake mailbox for the sign-in magic links. Web UI: http://localhost:8027
+  mailpit:
+    image: axllent/mailpit
+    ports:
+      - "127.0.0.1:1027:1025"
+      - "127.0.0.1:8027:8025"
+
+  # The Outline app itself. `docker compose up -d` (no args) starts this
+  # along with postgres/redis/mailpit. If you're running the app natively
+  # instead, start only the infra services: `docker compose up -d postgres
+  # redis mailpit`.
+  outline:
+    build:
+      context: .
+      dockerfile: Dockerfile.base
+    command: node build/server/index.js
+    env_file: .env
+    # These win over .env, so the same .env works for both setup paths: on the
+    # host the services are on 127.0.0.1, inside Docker they are service names.
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      DATABASE_URL: postgres://user:pass@postgres:5432/outline
+      PGSSLMODE: disable
+      REDIS_URL: redis://redis:6379
+      SMTP_HOST: mailpit
+      SMTP_PORT: "1025"
+      FILE_STORAGE_LOCAL_ROOT_DIR: /var/lib/outline/data
+    ports:
+      - "127.0.0.1:3003:3000"
+    volumes:
+      - outline-data:/var/lib/outline/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+
+volumes:
+  postgres-data:
+  outline-data:
