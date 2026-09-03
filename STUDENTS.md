@@ -8,44 +8,27 @@ sync engine is the most interesting part of this codebase.
 📚 **Official documentation:** <https://docs.getoutline.com/s/hosting/>
 
 Verified end to end on macOS (Apple Silicon) and on Windows 11 (Docker Desktop, WSL2 backend).
-<<<<<<< HEAD
 **On Windows, PowerShell and Git Bash both work.** Every `yarn` and `docker` command below is
 identical in either — `yarn` runs package scripts in its own built-in shell, and the scripts in this
 fork use Node's `fs` rather than shelling out to POSIX tools. Only a few plain shell commands differ
 between the two (`openssl`, `mkdir -p`, and the `VAR=value cmd` prefix in step 8); where that
 happens, the PowerShell equivalent is given right below it.
-=======
-**On Windows, run every command in this guide in Git Bash — not PowerShell or cmd.exe.** The build
-scripts shell out to POSIX tools (`cp`, `mkdir -p`, …) that PowerShell doesn't have, and every command
-below assumes a POSIX shell.
->>>>>>> d179e6e5718b484e1259df971262a4bc697ff210
 
 ---
 
 ## ⚠️ Read this first
 
-<<<<<<< HEAD
 1. **There is no real email, and you must use one of the three seeded addresses** (step 6) — not
    your own. Sign-in is a magic link delivered to a fake local mailbox (**Mailpit**,
    <http://localhost:8027>). If you type your own address, the server silently accepts the request (yes, that's a bug)
    and sends nothing — see [Gotcha #2](#9-gotchas). **The link is in Mailpit, for a address to test upon.**. To play around with the tool, make sure you open both URLs (3003 port and 8027 port)
-=======
-1. **There is no real email, and you must use one of the three seeded addresses** (step 5) — not
-   your own. Sign-in is a magic link delivered to a fake local mailbox (**Mailpit**,
-   <http://localhost:8027>). If you type your own address, the server silently accepts the request (yes, that's a bug)
-   and sends nothing — see [Gotcha #2](#8-gotchas). **The link is in Mailpit, for a address to test upon.**. To play around with the tool, make sure you open both URLs (3003 port and 8027 port)
->>>>>>> d179e6e5718b484e1259df971262a4bc697ff210
 2. **You cannot create the first account yourself.** Outline normally bootstraps its first team
    through Google/Slack/OIDC single sign-on, which this course setup does not configure. The seed
    script creates the team and users for you. Until you run it, the login page has **no sign-in
    options at all**.
 3. **Your clone path must have no spaces or apostrophes** (e.g. `~/dev/outline`, not
    `~/Fall'26/outline`). A `'` in the path silently corrupts the production build — see
-<<<<<<< HEAD
    [Gotcha #7](#9-gotchas) for the exact error. If you can't move the clone, use **Path A (Docker)**
-=======
-   [Gotcha #7](#8-gotchas) for the exact error. If you can't move the clone, use **Path A (Docker)**
->>>>>>> d179e6e5718b484e1259df971262a4bc697ff210
    below; it builds inside the container at a fixed internal path and is immune to this.
 
 ---
@@ -56,13 +39,8 @@ below assumes a POSIX shell.
 | --- | --- | --- |
 | **Docker Desktop** | any recent | Always required — runs PostgreSQL, Redis, and Mailpit. On Windows use the **WSL2** backend. |
 | **Git** | any recent | |
-<<<<<<< HEAD
 | **Node.js** | **22** | Only needed for **Path B** (running the app natively) and for running the test suite. `engines` allows 20.12+, 22, or 24 below 24.17.0, or 26 below 26.3.1, and **22 is the version upstream targets** — pick it if you're installing fresh (`winget install OpenJS.NodeJS.22`, or [nvm-windows](https://github.com/coreybutler/nvm-windows)). If you already have the 24.18+ that `winget install OpenJS.NodeJS` gives you: it sits just outside that range, but Yarn only warns rather than refusing, and install → build → migrate → seed → run was verified end to end on 24.18.0. You don't have to downgrade. |
 | **Yarn** | **4.11.0** | Path B only. Pinned via `packageManager`; run `corepack enable` once. On Windows that writes shims into `C:\Program Files\nodejs` and **needs an Administrator terminal** — see [Gotcha #11](#9-gotchas). Confirm with `yarn -v`. |
-=======
-| **Node.js** | **22** | Only needed for **Path B** (running the app natively) and for running the test suite. `engines` allows 20.12+, 22, or 24 below 24.17.0, or 26 below 26.3.1 — but **22 is the simplest reliable choice**. ⚠️ The Node 24 that `winget install OpenJS.NodeJS` installs on Windows is **24.18+, which is *not* in the allowed range** — install 22 instead (e.g. `winget install OpenJS.NodeJS.22`, or via [nvm-windows](https://github.com/coreybutler/nvm-windows)). |
-| **Yarn** | **4.11.0** | Path B only. Pinned via `packageManager`; run `corepack enable` once. |
->>>>>>> d179e6e5718b484e1259df971262a4bc697ff210
 
 > 💡 **New to MobX?** Outline's React client manages state with [MobX](https://mobx.js.org/the-gist-of-mobx.html) (observables + reactions), not Redux. [*The Gist of MobX*](https://mobx.js.org/the-gist-of-mobx.html) is a 10-minute read — do it before touching anything in `app/stores/`.
 
@@ -81,7 +59,6 @@ its settings. Every image used here is ARM-native.
 | --- | --- | --- |
 | The app itself runs | in a container | directly on your machine via `yarn` |
 | Needs Node/Yarn installed | No | Yes |
-<<<<<<< HEAD
 | Hot reload / fast iteration | No — every change needs an image rebuild (~1 min) | **Yes**, once you switch to dev mode — see [section 5](#5-the-edit-run-loop) |
 | Works with a clone path containing spaces/apostrophes | **Yes** | **No** — the build breaks, see [Gotcha #7](#9-gotchas) |
 | Recommended for | A first look at the app, or a machine where the Node toolchain won't cooperate | **Anyone writing code — so, everyone on this course** |
@@ -91,11 +68,6 @@ about a minute (measured below) — but because Path B gives you instant client 
 port, and debug-level logs, and because **you need Node and Yarn installed for the test suite
 anyway** (section 8). Once they're installed, Path A saves you nothing. [Section 5](#5-the-edit-run-loop)
 is the loop you'll actually live in.
-=======
-| Hot reload / fast iteration | No (rebuild the image after every change) | No on this production path either — see [Gotcha #8](#8-gotchas) |
-| Works with a clone path containing spaces/apostrophes | **Yes** | **No** — the build breaks, see [Gotcha #7](#8-gotchas) |
-| Recommended for | Windows, or anyone who just wants it running to try the app | macOS/Linux, or anyone actively modifying server/client code |
->>>>>>> d179e6e5718b484e1259df971262a4bc697ff210
 
 Both paths share the same `.env` file and the same PostgreSQL/Redis/Mailpit containers — you can
 follow **section 3 (Configure)** once regardless of which path you pick, then branch at section 4.
@@ -111,7 +83,6 @@ cd outline
 ## 3. Configure
 
 ```bash
-<<<<<<< HEAD
 cp .env.sample .env     # PowerShell: cp is an alias for Copy-Item, so this works as-is
 
 # Two secrets — run this twice, one value for SECRET_KEY and one for UTILS_SECRET.
@@ -122,12 +93,6 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 Node one-liner works in both shells; on Path A, where you may not have Node installed, use Git Bash
 or any other source of 64 random hex characters.
 
-=======
-cp .env.sample .env
-openssl rand -hex 32    # run twice — one value for each secret (SECRET_KEY and UTILS_SECRET)
-```
-
->>>>>>> d179e6e5718b484e1259df971262a4bc697ff210
 Set these in `.env`. 
 the four `SMTP_*` lines at the bottom do **not** exist in `.env.sample` and need to be added.
 
@@ -180,7 +145,6 @@ One command builds the app image and starts the backend services — PostgreSQL 
 ```bash
 docker compose up -d
 ```
-<<<<<<< HEAD
 
 The first run builds the app image (`yarn install` + `yarn build` inside the container, a few
 minutes). Then migrate and seed by running one-off commands against the running stack:
@@ -214,38 +178,6 @@ mkdir -p <the FILE_STORAGE_LOCAL_ROOT_DIR path you chose>
 corepack enable                           # once per machine — Windows: Administrator terminal (command prompt, run as administrator)
 yarn install --immutable
 yarn build                                # ~1 min
-=======
-
-The first run builds the app image (`yarn install` + `yarn build` inside the container, a few
-minutes). Then migrate and seed by running one-off commands against the running stack:
-
-```bash
-docker compose run --rm outline yarn db:migrate         # a few hundred migrations, a few seconds
-docker compose run --rm outline node build/server/scripts/seed-demo.js
-```
-
-The app is at **<http://localhost:3003>**. If migrate reports a `Validation error` about a
-duplicate key on the first try, just re-run the same command — it's idempotent and this resolves
-on retry (occasionally Postgres reports itself ready a moment before it truly is).
-
-To rebuild after pulling new code:
-
-```bash
-docker compose build outline
-docker compose up -d outline
-docker compose run --rm outline yarn db:migrate
-```
-
-### Path B — Native
-
-```bash
-docker compose up -d postgres redis mailpit
-mkdir -p <the FILE_STORAGE_LOCAL_ROOT_DIR path you chose>
-
-corepack enable
-yarn install --immutable
-yarn build                                # ~15 s
->>>>>>> d179e6e5718b484e1259df971262a4bc697ff210
 yarn db:migrate                           # a few hundred migrations, a few seconds
 node build/server/scripts/seed-demo.js    # creates the team, users and demo content
 yarn start
@@ -435,15 +367,9 @@ Worth doing before you pick a task — it's the feature that makes this project 
 ## 8. Run the tests
 
 The test suite runs natively — it needs Node/Yarn installed locally (see Prerequisites) even if
-<<<<<<< HEAD
 you're running the app itself via Path A.
 
 ```bash (gitbash not vscode terminal i.e., powershell)
-=======
-you're running the app itself via Path A. On Windows, run these in Git Bash.
-
-```bash
->>>>>>> d179e6e5718b484e1259df971262a4bc697ff210
 NODE_ENV=test yarn sequelize db:drop      # first time only
 NODE_ENV=test yarn sequelize db:create
 NODE_ENV=test yarn sequelize db:migrate
@@ -451,7 +377,6 @@ NODE_ENV=test yarn sequelize db:migrate
 yarn test                                 # full suite, ~70 s
 ```
 
-<<<<<<< HEAD
 PowerShell has no `VAR=value cmd` prefix, so set the variable once for the session instead:
 
 ```powershell
@@ -463,8 +388,6 @@ yarn test
 Remove-Item Env:NODE_ENV                  # back to the dev database for later commands
 ```
 
-=======
->>>>>>> d179e6e5718b484e1259df971262a4bc697ff210
 Narrower runs: `yarn test:server`, `yarn test:app`, `yarn test:shared`, `yarn test:watch`. The suite
 is **Vitest** (not Jest), and `TZ=UTC` is already built into the `test` script.
 
@@ -498,25 +421,18 @@ missing sourcemaps for `prosemirror-codemark`.
 5. **Port conflicts** — this project uses 3003 (app), 5432 (Postgres), 6379 (Redis), 8027/1027
    (Mailpit). Find the culprit with `lsof -nP -iTCP:3003 -sTCP:LISTEN`, or
    `netstat -ano | findstr "3003"` on Windows.
-<<<<<<< HEAD
 6. **Use `yarn dev:watch`, not `make up`, for dev mode.** `make up` does the same thing plus
    `yarn install-local-ssl`, which shells out to **mkcert** — and it starts only Postgres and Redis,
    not Mailpit. mkcert isn't actually required either way: without certs Vite just warns
    `No local SSL certs found, HTTPS will not be available` and serves over plain HTTP, which is what
    [section 5](#5-the-edit-run-loop) relies on. (`make` also isn't installed on Windows by
    default.)
-=======
-6. **Don't run `make up` unless you want the dev server.** It needs **mkcert** for local HTTPS and
-   serves the client from a separate Vite server on port **3001**. The paths above are one process
-   on one port and need neither.
->>>>>>> d179e6e5718b484e1259df971262a4bc697ff210
 7. **`yarn build` fails with a cryptic "Missing semicolon" error inside `workbox-build`/`sw.js`,
    pointing at a file path containing your clone directory** — your clone path has a space or `'` in
    it (e.g. `Fall'26 TA`). The service-worker build embeds the absolute file path as a JS string
    literal, and the stray `'` terminates it early. Fix: either move the clone somewhere with no
    spaces or apostrophes and re-run `yarn build`, or switch to **Path A (Docker)** — the build runs
    inside the container at a fixed path (`/opt/outline`) and never sees your host path.
-<<<<<<< HEAD
 8. **Your changes don't show up.** The section 4 commands are a production build — nothing
    watches your files there. Either switch to `yarn dev:watch`
    ([section 5](#5-the-edit-run-loop)), or rebuild by hand: `yarn build:server` after a server
@@ -545,13 +461,6 @@ missing sourcemaps for `prosemirror-codemark`.
     LF on every platform, so fresh clones don't see this. In a clone made before that was added:
     `git checkout -- shared/i18n/locales/en_US/translation.json`, and keep that file out of your
     commits.
-=======
-8. **No hot reload on either path.** Path B: after changing server code run `yarn build:server`;
-   after changing client code run `yarn build`. Then restart `yarn start`. Path A: rebuild the image
-   (`docker compose build outline && docker compose up -d outline`).
-9. **(Windows) `cp`/`mkdir`/etc. "is not recognized" when running a `yarn` script in PowerShell** —
-   PowerShell doesn't have these POSIX tools. Run all commands in this guide from Git Bash instead.
->>>>>>> d179e6e5718b484e1259df971262a4bc697ff210
 
 ---
 
@@ -565,7 +474,6 @@ missing sourcemaps for `prosemirror-codemark`.
 docker compose up -d
 ```
 
-<<<<<<< HEAD
 **Path B (Native) — writing code:**
 
 ```bash
@@ -574,9 +482,6 @@ yarn dev:watch
 ```
 
 **Path B (Native) — just running the last production build:**
-=======
-**Path B (Native):**
->>>>>>> d179e6e5718b484e1259df971262a4bc697ff210
 
 ```bash
 docker compose up -d postgres redis mailpit
