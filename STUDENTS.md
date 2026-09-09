@@ -248,17 +248,47 @@ files** — only use `-v` when you actually want that.
 
 ## 7. Running the tests
 
-Tests use their own separate database, so they can't touch your demo data.
+Tests use their own database, `outline-test`, separate from the `outline` database the app uses — so
+running them can never touch your demo data.
+
+**Postgres has to be running first.** If you stopped Docker, start it again before anything below:
 
 ```bash
-yarn db:create:test      # first time 
-yarn db:migrate:test     # first time 
-
-yarn test              
-yarn test:server       
-yarn test:app          
-yarn test:watch      
+docker compose up -d postgres redis mailpit
 ```
+
+One-time setup — creates that database and its tables:
+
+```bash
+yarn db:create:test      # creates the outline-test database
+yarn db:migrate:test     # creates the tables inside it
+```
+
+Then run the tests:
+
+```bash
+yarn test server/models/User.test.ts   # one file — about 5 seconds, use this most of the time
+yarn test:server                       # backend only
+yarn test:app                          # frontend only
+yarn test                              # everything (slow)
+yarn test:watch                        # re-runs on save
+```
+
+Run the two `db:` commands again whenever you pull new migrations. To start the test database over
+from scratch:
+
+```bash
+yarn db:drop:test && yarn db:create:test && yarn db:migrate:test
+```
+
+> **If `yarn db:create:test` says `Couldn't find a script named "db:create:test"`**, your clone is
+> older than those scripts. Run `git pull origin main`. If you'd rather not pull right now, these two
+> commands do exactly the same thing and work on any clone:
+>
+> ```bash
+> NODE_ENV=test yarn sequelize db:create
+> NODE_ENV=test yarn sequelize db:migrate
+> ```
 
 Two warnings you can ignore: a `client.query()` deprecation from the Postgres driver, and missing
 sourcemaps for `prosemirror-codemark`.
@@ -273,7 +303,7 @@ finding it on GitHub:
 ```bash
 yarn lint
 yarn tsc
-yarn test
+yarn test      # needs the test database from step 7, and Postgres running
 yarn build     # the production build — it can catch things dev mode doesn't
 ```
 
@@ -321,6 +351,22 @@ yarn build     # the production build — it can catch things dev mode doesn't
 
 11. **Don't run `make up`.** It's the upstream project's dev command; it skips Mailpit and expects
     tools you don't have. `yarn dev:watch` is the equivalent here.
+
+12. **`Couldn't find a script named "db:create:test"`** (or `db:migrate:test`). Your clone predates
+    those scripts. `git pull origin main`, or use the `NODE_ENV=test yarn sequelize` form shown in
+    [step 7](#7-running-the-tests).
+
+13. **`ERROR: database "outline-test" already exists`.** Not a failure — you already created it.
+    Carry on with `yarn db:migrate:test`. Use `yarn db:drop:test` first if you want a clean one.
+
+14. **`ERROR: connect ECONNREFUSED 127.0.0.1:5432`** from any `db:` command. Postgres isn't
+    running: `docker compose up -d postgres redis mailpit`. Nothing restarts itself after a reboot.
+
+15. **Tests fail with `relation "teams" does not exist`.** You created the test database but skipped
+    `yarn db:migrate:test`, so it has no tables. Run it.
+
+16. **`Couldn't find the node_modules state file - running an install might help`.** Exactly what it
+    says — `yarn install --immutable` in the repo folder.
 
 ---
 
